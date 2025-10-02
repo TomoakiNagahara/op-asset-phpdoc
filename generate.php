@@ -13,14 +13,20 @@
  * @copyright  Tomoaki Nagahara All right reserved.
  */
 
+//	...
+$test_file = 'index.html';
+$url       = 'https://phpdoc.org/phpDocumentor.phar';
+$phpdoc    = 'phpdoc';
+//$phar    = 'phpDocumentor.phar';
+
 /**	Testing Permissions.
  *
  * Testing write permissions in the current directory.
  * If this script cannot create a file, it will notify the user.
  */
-if( touch( $testfile = 'index.html') ){
+if( touch($test_file) ){
 	// Clean up after success.
-	unlink($testfile);
+	unlink($test_file);
 	echo "OK: You have permission to write in this directory.\n";
 }else{
 	echo "\n";
@@ -28,7 +34,7 @@ if( touch( $testfile = 'index.html') ){
 	echo "You do not have permission to create a file in this directory.\n";
 	echo "Please adjust the directory permissions and try again.\n";
 	echo "\n";
-	return;
+	exit(__LINE__);
 }
 
 /**	Check if the phpDocumentor file exists
@@ -36,23 +42,45 @@ if( touch( $testfile = 'index.html') ){
  * This script checks if the 'phpdoc' file exists in the current directory.
  * If it does not exist, it downloads the latest version of phpDocumentor.
  */
-if(!file_exists('phpdoc') ){
+if(!file_exists($phpdoc) ){
+	//	...
+	echo "phpDocumentor not found. Downloading...\n";
+
 	/**	Download and install phpDocumentor
 	 *
 	 * This script downloads the latest version of phpDocumentor,
 	 * a tool for generating documentation from PHP source code.
 	 */
-	`wget -O phpdoc https://phpdoc.org/phpDocumentor.phar`;
+	$wget = trim(shell_exec('command -v wget 2>/dev/null') ?? '');
+	if( $wget ){
+		`wget -O {$phpdoc} {$url}`;
+	}else{
+		if( $data = file_get_contents($url) ){
+			file_put_contents($phpdoc, $data);
+		}else{
+			echo "\nERROR: file_get_contents() is failed.\n\n";
+			exit(__LINE__);
+		}
+	}
+}
 
-	/**	Make the downloaded file executable
-	 *
-	 * After downloading, we change the permissions of the file to make it executable.
-	 * This is necessary to run the tool.
-	 */
+/**	Make the downloaded file executable
+ *
+ * After downloading, we change the permissions of the file to make it executable.
+ * This is necessary to run the tool.
+ */
+if( file_exists($phpdoc) ){
 	`chmod +x phpdoc`;
+}else{
+	echo "\nERROR: $phpdoc does not found.\n\n";
+	exit(__LINE__);
 }
 
 /**	Run phpDocumentor to generate documentation
+ *
+ * -d {source}  : directory to scan
+ * -t {target}  : output directory (here: current)
+ * --title      : documentation title
  *
  * This command runs phpDocumentor with the specified options:
  * - `-d ../../` specifies the directory to scan for PHP files.
