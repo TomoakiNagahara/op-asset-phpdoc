@@ -13,6 +13,24 @@
  * @copyright  Tomoaki Nagahara All right reserved.
  */
 
+/**	Testing Permissions.
+ *
+ * Testing write permissions in the current directory.
+ * If this script cannot create a file, it will notify the user.
+ */
+if( touch( $testfile = 'index.html') ){
+	// Clean up after success.
+	unlink($testfile);
+	echo "OK: You have permission to write in this directory.\n";
+}else{
+	echo "\n";
+	echo "ERROR:\n";
+	echo "You do not have permission to create a file in this directory.\n";
+	echo "Please adjust the directory permissions and try again.\n";
+	echo "\n";
+	return;
+}
+
 /**	Check if the phpDocumentor file exists
  *
  * This script checks if the 'phpdoc' file exists in the current directory.
