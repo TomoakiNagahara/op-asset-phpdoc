@@ -61,3 +61,12 @@ if(!file_exists('phpdoc') ){
  */
 $git_root = realpath(__DIR__ . '/../../');
 `./phpdoc run -d {$git_root} -t ./ --title onepiece-framework`;
+
+/**	Display a completion message after documentation generation.
+ *
+ */
+echo "\n\n";
+echo "Documentation generation completed successful.\n";
+echo "You can run this command multiple times.\n";
+echo "If you update the Git repository, you'll need to generate new documentation.\n";
+echo "\n";
