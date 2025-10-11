@@ -14,9 +14,9 @@
  */
 
 //	...
-$test_file = 'index.html';
 $url       = 'https://phpdoc.org/phpDocumentor.phar';
-$phpdoc    = 'phpdoc';
+$test_file = __DIR__.'/.touch';
+$phpdoc    = __DIR__.'/phpdoc';
 //$phar    = 'phpDocumentor.phar';
 
 /**	Testing Permissions.
@@ -70,7 +70,7 @@ if(!file_exists($phpdoc) ){
  * This is necessary to run the tool.
  */
 if( file_exists($phpdoc) ){
-	`chmod +x phpdoc`;
+	`chmod +x {$phpdoc}`;
 }else{
 	echo "\nERROR: $phpdoc does not found.\n\n";
 	exit(__LINE__);
@@ -87,8 +87,10 @@ if( file_exists($phpdoc) ){
  * - `-t ./` specifies the target directory where the documentation will be generated.
  * - `--title onepiece-framework` sets the title of the documentation.
  */
-$git_root = realpath(__DIR__ . '/../../');
-`./phpdoc run -d {$git_root} -t ./ --title onepiece-framework`;
+$source = trim(`git rev-parse --show-superproject-working-tree`);
+$target = __DIR__.'/content/';
+
+`{$phpdoc} run -d {$source} -t {$target} --title onepiece-framework`;
 
 /**	Display a completion message after documentation generation.
  *
