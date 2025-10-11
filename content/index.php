@@ -37,11 +37,11 @@ if( file_exists('index.html') ){
 		</li>
 		<li>
 			Change the current directory:
-			<code>cd <?= __DIR__ ?></code>
+			<code>cd <?= OP()->Path('app:/') ?></code>
 		</li>
 		<li>
 			Run the following command:
-			<code>php ./generate.php</code>
+			<code>php asset/module/phpdoc/generate.php</code>
 		</li>
 		<li>
 			After the process is complete, reload this page.
