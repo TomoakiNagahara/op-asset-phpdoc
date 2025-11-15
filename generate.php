@@ -87,9 +87,21 @@ if( file_exists($phpdoc) ){
  * - `-t ./` specifies the target directory where the documentation will be generated.
  * - `--title onepiece-framework` sets the title of the documentation.
  */
+$title  = escapeshellarg('ONEPIECE Framework');
 $source = trim(`git rev-parse --show-superproject-working-tree`);
+$vendor = $source.'/asset/vendor/';
+$ignore = __DIR__.'/';
 $target = __DIR__.'/content/';
-$comand = "{$phpdoc} run -d {$source} -t {$target} --title onepiece-framework";
+$templa = __DIR__.'/template/phpDocumentor/onepiece';
+$templa = escapeshellarg($templa);
+$option = "-d {$source} "
+		. "-t {$target} "
+		. "--title {$title} "
+		. "--ignore={$ignore} "
+		. "--ignore={$vendor} "
+		. "--template={$templa} "
+		;
+$comand = "{$phpdoc} run {$option}";
 /* @var $output array */
 /* @var $status int   */
 exec($comand, $output, $status);
