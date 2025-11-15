@@ -89,8 +89,13 @@ if( file_exists($phpdoc) ){
  */
 $source = trim(`git rev-parse --show-superproject-working-tree`);
 $target = __DIR__.'/content/';
-
-`{$phpdoc} run -d {$source} -t {$target} --title onepiece-framework`;
+$comand = "{$phpdoc} run -d {$source} -t {$target} --title onepiece-framework";
+/* @var $output array */
+/* @var $status int   */
+exec($comand, $output, $status);
+if( $status ){
+	return;
+}
 
 /**	Display a completion message after documentation generation.
  *
