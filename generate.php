@@ -16,8 +16,7 @@
 //	...
 $url       = 'https://phpdoc.org/phpDocumentor.phar';
 $test_file = __DIR__.'/.touch';
-$phpdoc    = __DIR__.'/phpdoc';
-//$phar    = 'phpDocumentor.phar';
+$phpdoc    = __DIR__.'/phpDocumentor';
 
 /**	Testing Permissions.
  *
