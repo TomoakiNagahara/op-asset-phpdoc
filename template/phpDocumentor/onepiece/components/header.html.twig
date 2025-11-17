@@ -1,3 +1,23 @@
+<?php
+$app_root = OP()->Path('app:/');
+$develop = OP()->Path('git:/asset/module/develop');
+$develop = realpath($develop);
+exec('find '.$app_root.' -maxdepth 1 -type l -exec sh -c \'echo "{} -> $(readlink -f "{}")"\' \; ', $output, $status);
+foreach( $output as $line ){
+	list($file, $link) = explode("->", $line);
+	$file = trim($file);
+	$link = trim($link);
+	if( $link === $develop ){
+		$href = OP()->URL($file);
+	}
+};
+?>
+<div>
+	[
+		<a href="<?= $href ?>">develop</a> | 
+		<a href="<?= $href ?>tutorial">tutorial</a>
+	]
+</div>
 <header class="phpdocumentor-header phpdocumentor-section">
     {% include 'components/header-title.html.twig' %}
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
