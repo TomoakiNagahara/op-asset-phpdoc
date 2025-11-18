@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+OP()->Unit()->WebPack()->Auto('asset:/webpack/css/phpDocumentor.css');
+?>
 <head>
     <meta charset="utf-8">
     {% block head %}
@@ -29,10 +30,10 @@
         <script defer src="js/searchIndex.js"></script>
     {% endblock %}
 </head>
-<body id="top">
+<div id="top">
     {% include 'components/header.html.twig' %}
 
-    <main class="phpdocumentor">
+    <main class="phpdocumentor" id="phpDocumentor">
         <div class="phpdocumentor-section">
             {% include 'components/sidebar.html.twig' %}
 
@@ -60,5 +61,4 @@
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
-</body>
-</html>
+</div>
